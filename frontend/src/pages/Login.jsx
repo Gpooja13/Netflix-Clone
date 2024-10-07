@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Background from "../components/Background";
 import Header from "../components/Header";
@@ -22,9 +22,15 @@ const Login = () => {
     }
   };
 
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (currentUser) navigate("/");
-  });
+  useEffect(() => {
+    // Add the onAuthStateChanged listener within useEffect
+    const unsubscribe = onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (currentUser) navigate("/"); // Navigate to home if user is logged in
+    });
+
+    // Cleanup the listener when component unmounts
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <Container>
@@ -59,7 +65,7 @@ const Login = () => {
                   })
                 }
               />
-              <button onClick={handleLoginIn}>Login In</button>
+              <button onClick={handleLoginIn}>Login</button>
             </div>
           </div>
         </div>
