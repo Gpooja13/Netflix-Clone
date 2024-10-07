@@ -6,7 +6,7 @@ import { FaPowerOff, FaSearch } from "react-icons/fa";
 import { firebaseAuth } from "../utils/firebase-config";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
-export default function Navbar(isScrolled) {
+export default function Navbar({ isScrolled }) {
   const links = [
     { name: "Home", link: "/" },
     { name: "TV Shows", link: "/tv" },
@@ -17,10 +17,6 @@ export default function Navbar(isScrolled) {
   const [showSearch, setShowSearch] = useState(false);
   const [inputHover, setInputHover] = useState(false);
   const navigate = useNavigate();
-
-  // onAuthStateChanged(firebaseAuth, (currentUser) => {
-  //   if (!currentUser) navigate("/login");
-  // });
 
   const handleSignOut = async () => {
     try {
@@ -42,7 +38,7 @@ export default function Navbar(isScrolled) {
 
   return (
     <Container>
-      <nav className={`flex ${isScrolled ? "srcolled" : ""}`}>
+      <nav className={`flex ${isScrolled ? "scrolled" : ""}`}>
         <div className="left flex a-center">
           <div className="brand a-center j-center">
             <img src={logo} alt="logo" />
@@ -51,8 +47,7 @@ export default function Navbar(isScrolled) {
             {links.map(({ name, link }) => {
               return (
                 <li key={name}>
-                  <Link to={link} />
-                  {name}
+                  <Link to={link}>{name} </Link>
                 </li>
               );
             })}
